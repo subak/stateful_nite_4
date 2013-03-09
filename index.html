@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<haed>
+  <meta charset="utf-8">
+  <title>Stateful Nite 4</title>
+  <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <style>
+  body {
+    padding-top: 20px;
+  }
+  
+  ul.unstyled > li {
+    margin: 5px;
+  }
+  
+  .table.table-hover tr td:nth-child(1) {
+    text-align: center;
+    vertical-align: middle;
+    cursor:     pointer;
+  }
+  
+  .table.table-hover tr td:nth-child(3) {
+    text-align: center;
+    vertical-align: middle;
+    cursor:     pointer;
+  }
+  
+  .table.table-hover input {
+    margin-bottom: 0px;
+  }
+
+  </style>
+  <script type="text/javascript" src="lib/jquery/jquery-1.9.1.js"></script>  
+  <script type="text/javascript" src="lib/jquery-ui-bootstrap/js/jquery-ui-1.9.2.custom.min.js"></script>
+  <script type="text/javascript" src="lib/jquerymx/jquery.lang.string.js"></script>
+  <script type="text/javascript" src="lib/jquerymx/jquery.class.js"></script>
+  <script type="text/javascript" src="lib/jquerymx/jquery.controller.js"></script>
+  <script type="text/javascript" src="lib/jquerymx/jquery.model.js"></script>
+  <script type="text/javascript" src="lib/jquerymx/jquery.model.list.js"></script>
+  <script type="text/javascript" src="lib/jquerymx/jquery.event.destroyed.js"></script>
+  <script type="text/javascript" src="lib/jquerymx/jquery.view.js"></script>
+  <script type="text/javascript" src="lib/jquerymx/jquery.view.tmpl.js"></script>
+  <!--<script type="text/javascript" src="lib/jquerymx/jquery.dom.fixture.js"></script>-->
+  <script type="text/javascript" src="lib/domino/domino.js"></script>
+  <script type="text/javascript" src="js/models.js"></script>
+  <script type="text/javascript" src="js/views.js"></script>
+  <script type="text/javascript" src="js/controllers.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="span6">
+        <ul class="unstyled" data-ctrl="Stateful.ListController" data-append="domain_list">
+          <li class="alert"><h2>1年</h2>
+            <ul class="unstyled">
+              <li class="alert alert-error"><h3>1年1組</h3>
+                <ul class="unstyled">
+                  <li class="alert alert-info"><h4>1年1組1番 あ</h4></li>
+                  <li class="alert alert-info"><h4>1年1組2番 い</h4></li>
+                </ul>
+              </li>
+              <li class="alert alert-error"><h3>1年2組</h3>
+                <ul class="unstyled">
+                  <li class="alert alert-info"><h4>1年2組1番 あ</h4></li>
+                  <li class="alert alert-info"><h4>1年2組2番 い</h4></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="span6">
+        <h2>Domain</h2>
+        <table class="table table-hover span6" data-ctrl="DomainTableController">
+          <tbody data-append="domain_row">
+            <tr>
+              <td><i class="icon-move"></i></td>
+              <td><input class="span4" type="text"></td>
+              <td><button class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i></button></td>
+            </tr>
+            <tr>
+              <td><i class="icon-move"></i></td>
+              <td><input class="span4" type="text"></td>
+              <td><button class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i></button></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td class="span1"><button class="btn btn-primary btn-mini"><i class="icon-plus icon-white"></i></button></td>
+              <td></td>
+              <td class="span1"></td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <h2>Kingdom</h2>
+        <table class="table table-hover span6" data-ctrl="KingdomTableController" data-html="table"></table>
+        
+        <h2>Division</h2>
+        <table class="table table-hover span6" data-ctrl="DivisionTableController" data-html="table"></table>
+      </div>
+    </div>
+  </div>
+
+  <script id="tmpl-table" type="text/x-jquery-tmpl">
+  <tbody data-append="row"></tbody>
+  <tfoot>
+    <tr>
+      <td class="span1"><button class="btn btn-primary btn-mini"><i class="icon-plus icon-white"></i></button></td>
+      <td></td>
+      <td class="span1"></td>
+    </tr>
+  </tfoot>
+  </script>
+
+  <script id="tmpl-row" type="text/x-jquery-tmpl">
+  <tr>
+    <td><i class="icon-move"></i></td>
+    <td><input class="span4" type="text"></td>
+    <td><button class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i></button></td>
+  </tr>
+  </script>
+
+  <script type="text/javascript">
+  $('[data-ctrl="DomainTableController"] tbody, [data-ctrl="KingdomTableController"] tbody, [data-ctrl="DivisionTableController"] tbody').sortable({axis: "y", handle: "td:nth-child(1)"});
+  </script>
+
+
+
+
+
+
+
+<script id="tmpl-domain_list" type="text/x-jquery-tmpl">
+<li class="alert"><br data-replace="domain_list_name">
+  <ul data-append="kingdom_list"></ul>
+</li>
+</script>
+
+<script id="tmpl-domain_list_name" type="text/x-jquery-tmpl">
+<h2>${domain_name}</h2>
+</script>
+
+<script id="tmpl-kingdom_list" type="text/x-jquery-tmpl">
+<li><br data-replace="kingdom_list_name">
+  <ul data-append="divition_list"></ul>
+</li>
+</script>
+
+<script id="tmpl-kingdom_list_name" type="text/x-jquery-tmpl">
+<h3>${domain_name} | ${kingdome_name}</h3>
+</script>
+
+<script id="tmpl-division_list" type="text/x-jquery-tmpl">
+<li><h4>${domain_name} | ${kingdome_name} | ${division_name}</h4></li>
+</script>
+
+
+<script type="text/javascript">
+
+new Stateful.ListController($('[data-ctrl="Stateful.ListController"]'));
+$.when(
+  Stateful.DomainCollection.fetch(),
+  Stateful.KingdomCollection.fetch(),
+  Stateful.DivisionCollection.fetch()).done(
+function ( domains, kingdoms, divisions ) {
+  $.pubsub.trigger("stateful.ready", [domains, kingdoms, divisions]);
+});
+
+</script>
+</body>
+</html>
