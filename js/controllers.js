@@ -8,7 +8,7 @@
       divisionListViews:     []
     }
   }, {
-    "{$.pubsub} stateful.ready": function ( o, e, domains, kingdoms, divisions ) {
+    "{$.pubsub} ready.stateful": function ( o, e, domains, kingdoms, divisions ) {
       this.domains   = domains;
       this.kingdoms  = kingdoms;
       this.divisions = divisions;

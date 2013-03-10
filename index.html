@@ -166,7 +166,7 @@ $.when(
   Stateful.DomainCollection.fetch(),
   Stateful.KingdomCollection.fetch(),
   Stateful.DivisionCollection.fetch()).done(function ( domains, kingdoms, divisions ) {
-  $.pubsub.trigger("stateful.ready", [domains, kingdoms, divisions]);
+  $.pubsub.trigger("ready.stateful", [domains, kingdoms, divisions]);
 });
 
 xm = null
