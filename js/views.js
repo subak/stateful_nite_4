@@ -1,14 +1,14 @@
 (function ( ) {
   Domino.View("Stateful.View", { }, {
-    "{domain} destroyed": function ( ) { 
-      if ( this.inTree() ) { this.remove(); }
-    },
-    "{kingdom} destroyed": function ( ) {
-      if ( this.inTree() ) { this.remove(); }
-    },
-    "{division} destroyed": function ( ) {
-      if ( this.inTree() ) { this.remove(); }
-    }
+    // "{domain} destroyed": function ( ) { 
+    //   if ( this.inTree() ) { this.remove(); }
+    // },
+    // "{kingdom} destroyed": function ( ) {
+    //   if ( this.inTree() ) { this.remove(); }
+    // },
+    // "{division} destroyed": function ( ) {
+    //   if ( this.inTree() ) { this.remove(); }
+    // }
   });
   
   Stateful.View("Stateful.DomainListView", {
@@ -48,9 +48,10 @@
         domain_name:  this.domain.name,
         kingdom_name: this.kingdom.name
       };
-    },
-    "{domain} updated.attr": function ( ) { this.render(); },
-    "{kingdom} updated.attr": function ( ) { this.render(); }
+    }
+    // ,
+    // "{domain} updated.attr": function ( ) { this.render(); },
+    // "{kingdom} updated.attr": function ( ) { this.render(); }
   });
 
   Stateful.View("Stateful.DivisionListView", {
@@ -65,10 +66,11 @@
         kingdom_name:  this.kingdom.name,
         division_name: this.division.name
       };
-    },
-    "{domain} updated.attr": function ( ) { this.render(); },
-    "{kingdom} updated.attr": function ( ) { this.render(); },
-    "{division} updated.attr": function ( ) { this.render(); }
+    }
+    // ,
+    // "{domain} updated.attr": function ( ) { this.render(); },
+    // "{kingdom} updated.attr": function ( ) { this.render(); },
+    // "{division} updated.attr": function ( ) { this.render(); }
   });
 
 
