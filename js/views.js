@@ -1,8 +1,14 @@
 (function ( ) {
   Domino.View("Stateful.View", { }, {
-    "{domain} destroyed": function ( ) { this.remove(); },
-    "{kingdom} destroyed": function ( ) { this.remove(); },
-    "{division} destroyed": function ( ) { this.remove(); }
+    "{domain} destroyed": function ( ) { 
+      if ( this.inTree() ) { this.remove(); }
+    },
+    "{kingdom} destroyed": function ( ) {
+      if ( this.inTree() ) { this.remove(); }
+    },
+    "{division} destroyed": function ( ) {
+      if ( this.inTree() ) { this.remove(); }
+    }
   });
   
   Stateful.View("Stateful.DomainListView", {
@@ -14,16 +20,14 @@
 
   Stateful.DomainListView("Stateful.DomainListNameView", {
     defaults: {
-      tmpl:   "domain_list_name",
+      tmpl:         "domain_list_name",
+      dataBindings: ["domain"],
     }
   }, {
     toJson: function ( ) {
       return {
         domain_name: this.domain.name
       };
-    },
-    "{domain} updated.attr": function ( a, b, c, d ) {
-      this.render();
     }
   });
 
@@ -44,7 +48,9 @@
         domain_name:  this.domain.name,
         kingdom_name: this.kingdom.name
       };
-    }
+    },
+    "{domain} updated.attr": function ( ) { this.render(); },
+    "{kingdom} updated.attr": function ( ) { this.render(); }
   });
 
   Stateful.View("Stateful.DivisionListView", {

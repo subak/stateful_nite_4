@@ -23,19 +23,6 @@
   }, { });
 
   Domino.Collection("Stateful.Collection", {
-    fetchWith: function ( klass, datas ) {
-      var df, models = [], i, collection;
-      df = $.Deferred();
-      for ( i in datas ) { models.push(new klass(datas[i])); }
-      collection = new this(models);
-      
-      $.pubsub.bind("model.created." + this.defaults.klass.fullName, collection.proxy(function ( e, model ) {
-        this.push(model);
-      }));
-
-      df.resolve(collection);
-      return df.promise();
-    }
   }, {
     forEach: function ( callback, thisArg ) {
       Array.prototype.forEach.apply(this, [callback, thisArg]);

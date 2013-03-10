@@ -40,6 +40,7 @@
   <script type="text/javascript" src="lib/jquerymx/jquery.event.destroyed.js"></script>
   <script type="text/javascript" src="lib/jquerymx/jquery.view.js"></script>
   <script type="text/javascript" src="lib/jquerymx/jquery.view.tmpl.js"></script>
+  <script type="text/javascript" src="lib/sinon/sinon-1.6.0.js"></script>
   <script type="text/javascript" src="lib/domino/domino.js"></script>
   <script type="text/javascript" src="js/models.js"></script>
   <script type="text/javascript" src="js/views.js"></script>
@@ -157,6 +158,8 @@
 
 <script type="text/javascript">
 
+sinon.spy(Stateful.DomainModel.prototype, "bind");
+
 new Stateful.ListController($('[data-ctrl="Stateful.ListController"]'));
 
 $.when(
@@ -168,9 +171,11 @@ $.when(
 
 xm = null
 function test_x(){
-  xm = new Stateful.DomainModel({
+  Stateful.DomainModel.create({
     id:   3,
     name: "ほげ"
+  }).done(function ( model ) {
+    xm = model
   });
 }
 

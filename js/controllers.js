@@ -12,6 +12,8 @@
       this.domains   = domains;
       this.kingdoms  = kingdoms;
       this.divisions = divisions;
+      
+      this._unbind()
       this.bind();
 
       this.domains.forEach(function ( domain ) {
@@ -59,6 +61,7 @@
       var domain   = kingdom ? this.domains.get(kingdom.domainId)[0] : undefined;
       this.addDivisionView(domain, kingdom, division);
     },
+
     "{$.pubsub} view.created.Stateful.DomainListView": function ( o, e, view, df ) {
       df.resolve(this.entryPoint("domain_list"));
     },
