@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<haed>
+<head>
   <meta charset="utf-8">
   <title>Stateful Nite 4</title>
   <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -160,7 +160,7 @@
 
 sinon.spy(Stateful.DomainModel.prototype, "bind");
 
-new Stateful.ListController($('[data-ctrl="Stateful.ListController"]'));
+ctrl = new Stateful.ListController($('[data-ctrl="Stateful.ListController"]'));
 
 $.when(
   Stateful.DomainCollection.fetch(),
