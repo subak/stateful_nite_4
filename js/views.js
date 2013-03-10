@@ -1,35 +1,42 @@
 (function ( ) {
-  Domino.View("Stateful.DomainListView", {
+  Domino.View("Stateful.View", { }, {
+    "{domain} destroyed": function ( ) { this.remove(); },
+    "{kingdom} destroyed": function ( ) { this.remove(); },
+    "{division} destroyed": function ( ) { this.remove(); }
+  });
+  
+  Stateful.View("Stateful.DomainListView", {
     defaults: {
       tmpl:   "domain_list",
       models: ["domain"]
-    }    
+    }
   }, { });
 
-  Domino.View("Stateful.DomainListNameView", {
+  Stateful.DomainListView("Stateful.DomainListNameView", {
     defaults: {
       tmpl:   "domain_list_name",
-      models: ["domain"]
     }
   }, {
     toJson: function ( ) {
       return {
         domain_name: this.domain.name
       };
+    },
+    "{domain} updated.attr": function ( a, b, c, d ) {
+      this.render();
     }
   });
 
-  Domino.View("Stateful.KingdomListView", {
+  Stateful.View("Stateful.KingdomListView", {
     defaults: {
       tmpl:    "kingdom_list",
       models:  ["domain", "kingdom"],
     }
   }, { });
 
-  Domino.View("Stateful.KingdomListNameView", {
+  Stateful.KingdomListView("Stateful.KingdomListNameView", {
     defaults: {
-      tmpl:    "kingdom_list_name",
-      models:  ["domain", "kingdom"]
+      tmpl: "kingdom_list_name"
     }
   }, {
     toJson: function ( ) {
@@ -40,7 +47,7 @@
     }
   });
 
-  Domino.View("Stateful.DivisionListView", {
+  Stateful.View("Stateful.DivisionListView", {
     defaults: {
       tmpl:     "division_list",
       models:   ["domain", "kingdom", "division"]
@@ -52,7 +59,10 @@
         kingdom_name:  this.kingdom.name,
         division_name: this.division.name
       };
-    }
+    },
+    "{domain} updated.attr": function ( ) { this.render(); },
+    "{kingdom} updated.attr": function ( ) { this.render(); },
+    "{division} updated.attr": function ( ) { this.render(); }
   });
 
 

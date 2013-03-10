@@ -34,13 +34,12 @@
   <script type="text/javascript" src="lib/jquery-ui-bootstrap/js/jquery-ui-1.9.2.custom.min.js"></script>
   <script type="text/javascript" src="lib/jquerymx/jquery.lang.string.js"></script>
   <script type="text/javascript" src="lib/jquerymx/jquery.class.js"></script>
-  <script type="text/javascript" src="lib/jquerymx/jquery.controller.js"></script>
+  <script type="text/javascript" src="lib/domino/jquery.controller.js"></script>
   <script type="text/javascript" src="lib/jquerymx/jquery.model.js"></script>
   <script type="text/javascript" src="lib/jquerymx/jquery.model.list.js"></script>
   <script type="text/javascript" src="lib/jquerymx/jquery.event.destroyed.js"></script>
   <script type="text/javascript" src="lib/jquerymx/jquery.view.js"></script>
   <script type="text/javascript" src="lib/jquerymx/jquery.view.tmpl.js"></script>
-  <!--<script type="text/javascript" src="lib/jquerymx/jquery.dom.fixture.js"></script>-->
   <script type="text/javascript" src="lib/domino/domino.js"></script>
   <script type="text/javascript" src="js/models.js"></script>
   <script type="text/javascript" src="js/views.js"></script>
@@ -133,7 +132,7 @@
 
 <script id="tmpl-domain_list" type="text/x-jquery-tmpl">
 <li class="alert"><br data-replace="domain_list_name">
-  <ul data-append="kingdom_list"></ul>
+  <ul class="unstyled" data-append="kingdom_list"></ul>
 </li>
 </script>
 
@@ -142,30 +141,38 @@
 </script>
 
 <script id="tmpl-kingdom_list" type="text/x-jquery-tmpl">
-<li><br data-replace="kingdom_list_name">
-  <ul data-append="divition_list"></ul>
+<li class="alert alert-error"><br data-replace="kingdom_list_name">
+  <ul class="unstyled" data-append="division_list"></ul>
 </li>
 </script>
 
 <script id="tmpl-kingdom_list_name" type="text/x-jquery-tmpl">
-<h3>${domain_name} | ${kingdome_name}</h3>
+<h3>${domain_name}${kingdom_name}</h3>
 </script>
 
 <script id="tmpl-division_list" type="text/x-jquery-tmpl">
-<li><h4>${domain_name} | ${kingdome_name} | ${division_name}</h4></li>
+<li class="alert alert-info"><h4>${domain_name}${kingdom_name}${division_name}</h4></li>
 </script>
 
 
 <script type="text/javascript">
 
 new Stateful.ListController($('[data-ctrl="Stateful.ListController"]'));
+
 $.when(
   Stateful.DomainCollection.fetch(),
   Stateful.KingdomCollection.fetch(),
-  Stateful.DivisionCollection.fetch()).done(
-function ( domains, kingdoms, divisions ) {
+  Stateful.DivisionCollection.fetch()).done(function ( domains, kingdoms, divisions ) {
   $.pubsub.trigger("stateful.ready", [domains, kingdoms, divisions]);
 });
+
+xm = null
+function test_x(){
+  xm = new Stateful.DomainModel({
+    id:   3,
+    name: "ほげ"
+  });
+}
 
 </script>
 </body>

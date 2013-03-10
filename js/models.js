@@ -24,10 +24,16 @@
 
   Domino.Collection("Stateful.Collection", {
     fetchWith: function ( klass, datas ) {
-      var df, models = [], i;
+      var df, models = [], i, collection;
       df = $.Deferred();
       for ( i in datas ) { models.push(new klass(datas[i])); }
-      df.resolve(new this(models));
+      collection = new this(models);
+      
+      $.pubsub.bind("model.created." + this.defaults.klass.fullName, collection.proxy(function ( e, model ) {
+        this.push(model);
+      }));
+
+      df.resolve(collection);
       return df.promise();
     }
   }, {
@@ -37,33 +43,30 @@
   });
 
   Stateful.Collection("Stateful.DomainCollection", {
+    defaults: {
+      klass: Stateful.DomainModel
+    },
     fetch: function () {
       return this.fetchWith(Stateful.DomainModel, [{ id: 1, name: "1年" }, { id: 2, name: "2年" }]);
     }
-  }, {
-    "{$.pubsub} model.created.Stateful.DomainModel": function ( o, e, model ) {
-      this.push(model);
-    }
-  });
+  }, { });
    
   Stateful.Collection("Stateful.KingdomCollection", {
+    defaults: {
+      klass: Stateful.KingdomModel
+    },
     fetch: function () {
       return this.fetchWith(Stateful.KingdomModel, [{ id: 1, name: "1組", domainId: 1 }, { id: 2, name: "2組", domainId: 2 }]);
     }
-  }, {
-    "{$.pubsub} model.created.Stateful.KingdomModel": function ( o, e, model ) {
-      this.push(model);
-    }
-  });
+  }, { });
    
   Stateful.Collection("Stateful.DivisionCollection", {
+    defaults: {
+      klass: Stateful.DivisionModel
+    },
     fetch: function () {
       return this.fetchWith(Stateful.DivisionModel, [{id: 1, name: "1番　あ", kingdomId: 1 }, { id: 2, name: "2番 い", kingdomId: 2 }]);
     }
-  }, {
-    "{$.pubsub} model.created.Stateful.DivisionModel": function ( o, e, model ) {
-      this.push(model);
-    }
-  });
+  }, { });
 
 })();
